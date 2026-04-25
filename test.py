@@ -1,9 +1,11 @@
-import pandas as pd
-df = pd.DataFrame({
-    "name": ["Amy", "Bob", "Cathy", "David", "Evan", "Fiona"],
-    "age": [20, 21, 19, 22, 20, 23],
-    "score": [88, 92, 79, 85, 90, 95]
-})
-df["passed"] = df["score"] >= 90
-print(df)
-df["score"] = df["score"] + 5
+import cv2
+img = cv2.imread("1-photo.jpg")
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5)
+# 畫出方框
+for (x, y, w, h) in faces:
+    cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 2)
+cv2.imshow("Face Detection", img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
